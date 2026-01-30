@@ -1,0 +1,545 @@
+<!-- =========================
+     PDF DOCUMENT TEMPLATE
+     (HTML + CSS only)
+     Fixed width, no header/footer
+========================= -->
+
+<style>
+  /* ===== Print + Page ===== */
+  @page { size: Letter; margin: 18mm; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body{
+    margin:0;
+    background:#fff;
+    color:#111827;
+    font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Fixed "document" width (Letter content area vibe) */
+  .doc{
+    width: 816px; /* ~8.5in @ 96dpi */
+    margin: 0 auto;
+    padding: 22px 22px 18px;
+  }
+
+  /* ===== Theme ===== */
+  :root{
+    --ink:#0f172a;
+    --muted:#475569;
+    --muted2:#64748b;
+    --line:#e5e7eb;
+    --line2:#eef2f7;
+    --card:#ffffff;
+    --soft:#f8fafc;
+    --soft2:#f1f5f9;
+    --pill:rgba(9,112,149,.08);
+    --accent:#097095;   /* MOCEANS brand */
+    --shadow: 0 10px 30px rgba(2, 6, 23, .08);
+  }
+
+  /* ===== Small utilities ===== */
+  .row{ display:flex; gap:14px; }
+  .col{ flex:1; min-width:0; }
+  .stack{ display:flex; flex-direction:column; gap:10px; }
+  .split{ display:flex; justify-content:space-between; gap:14px; align-items:flex-start; }
+  .hr{ height:1px; background:var(--line); margin:14px 0; }
+
+  .tag{
+    display:inline-flex; align-items:center; gap:7px;
+    padding:6px 10px;
+    border-radius:999px;
+    background: rgba(9,112,149,.10);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing:.2px;
+    white-space: nowrap;
+  }
+  .tag .dot{ width:7px; height:7px; border-radius:50%; background: var(--accent); }
+
+  .pill{
+    display:inline-flex;
+    padding:6px 10px;
+    border-radius:10px;
+    background: var(--pill);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .muted{ color: var(--muted); }
+  .muted2{ color: var(--muted2); }
+
+  /* ===== Logo ===== */
+  .logo-wrap{
+    text-align:center;
+    margin-bottom:14px;
+  }
+  .logo-wrap img{
+    max-width:180px;
+    height:auto;
+  }
+
+  /* ===== Top hero block ===== */
+  .hero{
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 18px 18px 16px;
+  }
+
+  .hero-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line2);
+  }
+
+  .hero-title{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+  }
+
+  .hero-title h1{
+    margin:0;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    color: var(--ink);
+  }
+
+  .hero-sub{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    color: var(--muted);
+    font-size: 12.5px;
+  }
+
+  .case-id{
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 12px;
+    color: #0b1220;
+    background: rgba(2,6,23,.04);
+    border: 1px solid rgba(2,6,23,.08);
+    padding: 6px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+
+  .hero-badges{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:flex-end;
+    min-width: 210px;
+  }
+
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  /* ===== Cards ===== */
+  .card{
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+    padding: 14px;
+  }
+  .card.soft{
+    background: linear-gradient(180deg, var(--soft), #fff 55%);
+  }
+
+  .card h2{
+    margin:0 0 10px 0;
+    font-size: 10px;
+    letter-spacing:.14em;
+    text-transform: uppercase;
+    color: #333;
+    font-weight: 600;
+  }
+
+  /* ===== Key/Value blocks ===== */
+  .kv{
+    display:grid;
+    grid-template-columns: 150px 1fr;
+    gap: 8px 12px;
+    align-items:start;
+  }
+
+  .k{
+    font-size: 11.5px;
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: .10em;
+    font-weight: 700;
+    padding-top: 3px;
+  }
+
+  .v{
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .v.small{ font-weight: 600; font-size: 13px; color:#0b1220; }
+
+  .v .subline{
+    display:block;
+    font-size: 12.5px;
+    color: var(--muted);
+    font-weight: 600;
+    margin-top: 3px;
+  }
+
+  /* ===== Section blocks (chips) ===== */
+  .chipset{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius: 999px;
+    border:1px solid rgba(9,112,149,.25);
+    background: rgba(9,112,149,.06);
+    color: #0b1220;
+    font-size: 12.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .chip strong{
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  /* ===== Two-column body layout ===== */
+  .body-grid{
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 14px;
+    margin-top: 14px;
+  }
+
+  /* ===== Notes box ===== */
+  .notes{
+    border: 1px solid rgba(9,112,149,.25);
+    background: linear-gradient(180deg, rgba(9,112,149,.04), rgba(9,112,149,.02));
+    border-radius: 14px;
+    padding: 12px;
+    color: #0b1220;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .notes .hint{
+    margin-top: 8px;
+    color: var(--muted);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* ===== Risk panel ===== */
+  .risk-wrap{
+    border-radius: 16px;
+    border: 1px solid rgba(9,112,149,.35);
+    background:#F3F9E6;
+    padding: 14px;
+  }
+  .risk-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-bottom: 10px;
+  }
+  .risk-head h3{
+    margin:0;
+    font-size: 13px;
+    letter-spacing:.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .risk-score{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 10px;
+    border-radius: 999px;
+    background: rgba(9,112,149,.12);
+    border: 1px solid rgba(9,112,149,.30);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .risk-items{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .risk-item{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 10px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.65);
+    color:#0b1220;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .risk-item .mark{
+    width:18px; height:18px; border-radius: 6px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background: rgba(9,112,149,.12);
+    border: 1px solid rgba(9,112,149,.30);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  /* ===== Sidebar cards ===== */
+  .side-stack{ display:flex; flex-direction:column; gap:14px; }
+  .mini{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .mini .line{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:baseline;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .mini .line:last-child{ border-bottom: 0; padding-bottom: 0; }
+
+  .mini .label{
+    font-size: 11.5px;
+    color: var(--muted2);
+    text-transform: uppercase;
+    letter-spacing: .10em;
+    font-weight: 700;
+  }
+  .mini .value{
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 600;
+    text-align:right;
+  }
+  .mini .value small{
+    display:block;
+    margin-top:3px;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 12px;
+  }
+
+  /* ===== Footer-safe print behavior ===== */
+  .no-break{ break-inside: avoid; page-break-inside: avoid; }
+  .keep{ break-inside: avoid; }
+</style>
+
+<section class="doc" aria-label="CIL Intake PDF Summary">
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <img src="https://d34hmiuaex7c0.cloudfront.net/2952/uploads/cmaspages/gallery/galleryitem_1759958511694.png" alt="MOCEANS Logo">
+  </div>
+
+  <!-- HERO / AT-A-GLANCE -->
+  <div class="hero no-break">
+    <div class="hero-top">
+      <div class="hero-title">
+        <h1>CIL Intake — Case Summary</h1>
+        <div class="hero-sub">
+          <span class="case-id">Case ID: 3573567</span>
+          <span class="muted2">Created: Jan 30, 2026 · 2:14 PM</span>
+          <span class="pill">Intake Source: Phone</span>
+          <span class="pill">Contact Type: Prospect</span>
+        </div>
+      </div>
+
+      <div class="hero-badges">
+        <span class="tag"><span class="dot"></span>Priority: Urgent Crisis</span>
+      </div>
+    </div>
+
+    <div class="hero-grid">
+      <!-- Consumer (big, first) -->
+      <div class="card soft">
+        <h2>Consumer</h2>
+        <div class="kv">
+          <div class="k">Name</div>
+          <div class="v">Maria Santos</div>
+
+          <div class="k">Age / Gender</div>
+          <div class="v">34 <span class="subline">Female</span></div>
+
+          <div class="k">Primary Language</div>
+          <div class="v">English</div>
+
+          <div class="k">Preferred Contact</div>
+          <div class="v">Text Message</div>
+
+          <div class="k">Email</div>
+          <div class="v small">maria.santos@email.com</div>
+
+          <div class="k">Phone</div>
+          <div class="v small">(732) 555-0198 <span class="subline">Mobile</span></div>
+        </div>
+      </div>
+
+      <!-- Address + Consent -->
+      <div class="card soft">
+        <h2>Location & Consent</h2>
+        <div class="kv">
+          <div class="k">Address</div>
+          <div class="v">
+            185 Constitution Ave, Apt 2B
+            <span class="subline">Toms River, Ocean County, NJ 08753</span>
+          </div>
+
+          <div class="k">Consent</div>
+          <div class="v">Yes — contact &amp; share with partners as needed</div>
+
+          <div class="k">Disability (704)</div>
+          <div class="v">Physical</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body-grid">
+    <!-- LEFT COLUMN (Details) -->
+    <div class="stack">
+      <!-- CONDITIONS -->
+      <div class="card keep">
+        <h2>Specific Condition(s)</h2>
+        <div class="chipset" aria-label="Selected conditions">
+          <span class="chip"><strong>Physical</strong> Spinal cord injury</span>
+          <span class="chip"><strong>Physical</strong> Chronic pain</span>
+          <span class="chip"><strong>Mental</strong> Anxiety</span>
+        </div>
+      </div>
+
+      <!-- SERVICES REQUESTED -->
+      <div class="card keep">
+        <h2>Call Reason / Services Requested</h2>
+
+        <div class="stack" style="gap:12px;">
+          <div>
+            <div class="k" style="margin-bottom:8px;">Independent Living Core Services</div>
+            <div class="chipset">
+              <span class="chip">Information &amp; Referral</span>
+              <span class="chip">Individual Advocacy</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="k" style="margin-bottom:8px;">Housing &amp; Environment</div>
+            <div class="chipset">
+              <span class="chip">Housing search</span>
+              <span class="chip">Utility assistance</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="k" style="margin-bottom:8px;">Benefits &amp; Income</div>
+            <div class="chipset">
+              <span class="chip">Medicaid / Medicare</span>
+              <span class="chip">SNAP / TANF / WIC</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="k" style="margin-bottom:8px;">Mobility &amp; Transportation</div>
+            <div class="chipset">
+              <span class="chip">Transportation coordination</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CALL SUMMARY -->
+      <div class="card keep">
+        <h2>Call Summary / Notes</h2>
+        <div class="notes">
+          Caller reports an immediate housing instability issue and needs help locating accessible temporary housing options.
+          Consumer also needs assistance navigating benefits and connecting to local utility support. Transportation is a barrier
+          to attending appointments; requests coordination resources.
+          <div class="hint">Navigator focus: housing stabilization + benefits navigation + transport support.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN (Decision helpers) -->
+    <aside class="side-stack">
+      <!-- QUICK FLAGS -->
+      <div class="card keep">
+        <h2>Quick Flags / Tags</h2>
+        <div class="chipset">
+          <span class="chip">New consumer</span>
+          <span class="chip">Homelessness risk</span>
+          <span class="chip">Aging (60+)</span>
+          <span class="chip">ASL needed</span>
+        </div>
+      </div>
+
+      <!-- HIGH RISK -->
+      <div class="risk-wrap keep" aria-label="High risk case indicators">
+        <div class="risk-head">
+          <h3>High Risk Case</h3>
+          <div class="risk-score">Risk Flags: 3</div>
+        </div>
+        <div class="risk-items">
+          <div class="risk-item"><span class="mark">!</span> Immediate safety concern</div>
+          <div class="risk-item"><span class="mark">!</span> Homelessness risk</div>
+          <div class="risk-item"><span class="mark">!</span> No utilities</div>
+        </div>
+      </div>
+
+      <!-- COMPLIANCE SNAPSHOT -->
+      <div class="card keep">
+        <h2>Compliance Snapshot</h2>
+        <div class="mini">
+          <div class="line">
+            <div class="label">704 Category</div>
+            <div class="value">Physical</div>
+          </div>
+          <div class="line">
+            <div class="label">Conditions</div>
+            <div class="value">3 selected</div>
+          </div>
+          <div class="line">
+            <div class="label">Consent</div>
+            <div class="value">Yes · share allowed</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
