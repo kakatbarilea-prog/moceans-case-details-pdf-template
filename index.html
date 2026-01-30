@@ -237,6 +237,10 @@
     gap: 14px;
     margin-top: 14px;
   }
+/* Full-width section inside body-grid */
+.full-width{
+  grid-column: 1 / -1;
+}
 
   /* ===== Notes box ===== */
   .notes{
@@ -487,15 +491,6 @@
         </div>
       </div>
 
-      <!-- CALL SUMMARY -->
-      <div class="card keep">
-        <h2>Call Summary / Notes</h2>
-        <div class="notes">
-          <div class="hint">Caller reports an immediate housing instability issue and needs help locating accessible temporary housing options.
-          Consumer also needs assistance navigating benefits and connecting to local utility support. Transportation is a barrier
-          to attending appointments; requests coordination resources.</div>
-        </div>
-      </div>
     </div>
 
     <!-- RIGHT COLUMN (Decision helpers) -->
@@ -543,5 +538,16 @@
         </div>
       </div>
     </aside>
+
+ <!-- CALL SUMMARY (FULL WIDTH) -->
+  <div class="card keep full-width">
+    <h2>Call Summary / Notes</h2>
+    <div class="notes">
+      <div class="hint">Caller reports an immediate housing instability issue and needs help locating accessible temporary housing options.
+      Consumer also needs assistance navigating benefits and connecting to local utility support. Transportation is a barrier
+      to attending appointments; requests coordination resources.</div>
+    </div>
   </div>
+</div>
+
 </section>
