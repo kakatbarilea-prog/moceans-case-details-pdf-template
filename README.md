@@ -1,0 +1,1 @@
+# moceans-case-details-pdf-template
